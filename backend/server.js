@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 5001;
 
 // Middleware
 app.use(bodyParser.json());
+
 const allowedOrigins = [
   process.env.FRONTEND_URL || 'http://localhost:8080',
   'https://hackmates-site.onrender.com',
@@ -29,7 +30,11 @@ app.use(cors({
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {
-  res.status(200).json({ status: "healthy" });
+  res.status(200).json({ 
+    status: "healthy",
+    message: "Server is up and running",
+    timestamp: new Date().toISOString(),
+  });
 });
 
 // Mailchimp API Configuration
@@ -65,7 +70,7 @@ app.post("/api/waitlist", async (req, res) => {
 
     res.status(200).json({ message: "You've been added to our waitlist!" });
   } catch (error) {
-    console.error("Error:", error.response?.data || error.message);
+    console.error("Error:", error.response?.data || error.message || error);
     
     if (error.message === "Missing Mailchimp configuration") {
       res.status(500).json({ error: "Server configuration error. Please contact support." });
