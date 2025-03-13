@@ -10,10 +10,21 @@ const PORT = process.env.PORT || 5001;
 
 // Middleware
 app.use(bodyParser.json());
+const allowedOrigins = [
+  process.env.FRONTEND_URL || 'http://localhost:8080',
+  'https://hackmates-site.onrender.com',
+];
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:8080',
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST'],
-  credentials: true
+  credentials: true,
 }));
 
 // Health check endpoint

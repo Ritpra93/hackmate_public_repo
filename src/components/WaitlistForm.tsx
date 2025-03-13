@@ -22,9 +22,10 @@ const WaitlistForm = () => {
     }
   
     setIsSubmitting(true);
-  
+     
     try {
-      const response = await fetch("http://localhost:5001/api/waitlist", {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL;
+      const response = await fetch(`${backendUrl}/api/waitlist`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
