@@ -53,6 +53,8 @@ app.post("/api/waitlist", async (req, res) => {
       throw new Error("Missing Mailchimp configuration");
     }
 
+    console.log("Adding email to Mailchimp:", email);
+
     // Add email to Mailchimp
     const response = await axios.post(
       mailchimpUrl,
@@ -68,11 +70,16 @@ app.post("/api/waitlist", async (req, res) => {
       }
     );
 
+    console.log("Mailchimp API response:", response.data);
+
     res.status(200).json({ message: "You've been added to our waitlist!" });
   } catch (error) {
     console.error("Error:", error.response?.data || error.message || error);
     
-    if (error.message === "Missing Mailchimp configuration") {
+    if (error.response?.status === 429) {
+      console.error("Rate limit exceeded. Please try again later.");
+      res.status(429).json({ error: "Rate limit exceeded. Please try again later." });
+    } else if (error.message === "Missing Mailchimp configuration") {
       res.status(500).json({ error: "Server configuration error. Please contact support." });
     } else if (error.response?.status === 400 && error.response?.data?.title === "Member Exists") {
       res.status(400).json({ error: "This email is already on the waitlist!" });
