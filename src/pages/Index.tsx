@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useRef } from "react";
 import Navbar from "@/components/Navbar";
 import FeatureCard from "@/components/FeatureCard";
@@ -123,55 +122,67 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Team Finder Demo Section */}
+        {/* Team Finder Demo Section - Updated with new layout */}
         <section 
-          className="max-w-5xl mx-auto py-12 px-4 md:px-6 glass-card rounded-3xl mb-16 border-2 border-hack-blue/20 shadow-lg"
+          className="max-w-6xl mx-auto py-14 px-4 md:px-8 rounded-3xl mb-16 overflow-hidden relative"
           id="match"
         >
-          <h2 className="text-3xl font-display font-bold mb-2 text-center text-hack-dark">
-            Match With Perfect Teams
-          </h2>
-          <p className="text-center text-hack-dark/80 mb-8 max-w-lg mx-auto">
-            Our AI-powered matching system connects you with teams that complement your skills and share your hackathon goals
-          </p>
+          {/* Background decoration */}
+          <div className="absolute inset-0 bg-gradient-to-br from-violet-50/70 via-white/40 to-cyan-50/70 backdrop-blur-sm -z-10"></div>
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-hack-blue/30 via-hack-purple/30 to-transparent"></div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <TeamCard
-              name="CodeCrusaders"
-              description="We're building an AR navigation tool to help people with disabilities. Looking for someone with React experience!"
-              skills={[{name: "Unity"}, {name: "AR/VR"}]}
-              needsText="Need React Dev"
-              metricName="Skill Match"
-              metricValue="92%"
-              delay={100}
-            />
+          <div className="mb-10">
+            <h2 className="text-3xl font-display font-bold mb-3 text-center text-hack-dark">
+              Match With Perfect Teams
+            </h2>
+            <p className="text-center text-hack-dark/80 max-w-lg mx-auto">
+              Our AI-powered matching system connects you with teams that complement your skills and share your hackathon goals
+            </p>
+          </div>
+          
+          <div className="space-y-4">
+            {/* First row of team cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <TeamCard
+                name="CodeCrusaders"
+                description="We're building an AR navigation tool to help people with disabilities. Looking for someone with React experience!"
+                skills={[{name: "Unity"}, {name: "AR/VR"}]}
+                needsText="Need React Dev"
+                metricName="Skill Match"
+                metricValue="92%"
+                delay={100}
+              />
+              
+              <TeamCard
+                name="EcoTech"
+                description="Creating a sustainable solution for waste management using IoT sensors and data analytics."
+                skills={[{name: "IoT"}, {name: "Data Science"}]}
+                metricName="Interests Match"
+                metricValue="86%"
+                delay={200}
+              />
+            </div>
             
-            <TeamCard
-              name="EcoTech"
-              description="Creating a sustainable solution for waste management using IoT sensors and data analytics."
-              skills={[{name: "IoT"}, {name: "Data Science"}]}
-              metricName="Interests Match"
-              metricValue="86%"
-              delay={200}
-            />
-            
-            <TeamCard
-              name="FinHack"
-              description="Revolutionizing personal finance with blockchain solutions for microtransactions and automated savings."
-              skills={[{name: "Blockchain"}, {name: "Solidity"}]}
-              metricName="Location"
-              metricValue="2.3 miles"
-              delay={300}
-            />
-            
-            <TeamCard
-              name="HealthAI"
-              description="Developing a machine learning platform to predict health issues from wearable data. Focused on preventative care."
-              skills={[{name: "ML"}, {name: "Health Tech"}]}
-              metricName="Availability"
-              metricValue="100%"
-              delay={400}
-            />
+            {/* Second row of team cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <TeamCard
+                name="FinHack"
+                description="Revolutionizing personal finance with blockchain solutions for microtransactions and automated savings."
+                skills={[{name: "Blockchain"}, {name: "Solidity"}]}
+                metricName="Location"
+                metricValue="2.3 miles"
+                delay={300}
+              />
+              
+              <TeamCard
+                name="HealthAI"
+                description="Developing a machine learning platform to predict health issues from wearable data. Focused on preventative care."
+                skills={[{name: "ML"}, {name: "Health Tech"}]}
+                metricName="Availability"
+                metricValue="100%"
+                delay={400}
+              />
+            </div>
           </div>
         </section>
         
