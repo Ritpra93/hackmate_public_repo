@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,46 +9,43 @@ const WaitlistForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-
-// Use this function in your /api/waitlist endpoint
-  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       toast.error("Please enter a valid email address");
       return;
     }
-  
+
     setIsSubmitting(true);
-  
+
     try {
-      const response = await fetch("/api/waitlist", {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL;
+      const response = await fetch(`${backendUrl}/api/waitlist`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email }),
       });
-  
+
       if (!response.ok) {
         throw new Error("Something went wrong. Please try again.");
       }
-  
+
       setIsSuccess(true);
       toast.success("You've been added to our waitlist!");
       setEmail("");
-  
+
       // Reset success state after a delay
       setTimeout(() => setIsSuccess(false), 3000);
     } catch (error) {
+      console.error("Error:", error);
       toast.error("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
-
-
 
   return (
     <div className="max-w-md w-full mx-auto animate-fade-in" style={{ animationDelay: "800ms" }}>
@@ -77,7 +73,7 @@ const WaitlistForm = () => {
               size="sm"
               className={`absolute right-1 h-10 transition-all duration-300 ${
                 isSubmitting || isSuccess 
-                  ? "bg-hack-purple/90" 
+                  ? "bg-hack-purple/90 opacity-50 cursor-not-allowed" 
                   : "bg-hack-purple hover:bg-hack-purple/90"
               }`}
               disabled={isSubmitting || isSuccess}
